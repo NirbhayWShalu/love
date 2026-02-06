@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Message From The Future</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #0b0f14;
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 420px;
+  padding: 24px;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Loading */
+.loading-text {
+  font-size: 1.1rem;
+  opacity: 0.85;
+  margin-bottom: 20px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: #1c2330;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #6ea8ff, #9bffd8);
+  transition: width 0.6s ease;
+}
+
+/* Message */
+.message {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  line-height: 1.6;
+  margin-top: 20px;
+  opacity: 0;
+  transition: opacity 1.5s ease;
+}
+
+/* Image */
+.future-image {
+  margin-top: 25px;
+}
+
+.future-image img {
+  width: 100%;
+  border-radius: 18px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+}
+
+/* Footer */
+.footer {
+  margin-top: 18px;
+  font-size: 0.9rem;
+  opacity: 0.75;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- Loading Screen -->
+  <div id="loading">
+    <div class="loading-text" id="loadingText">
+      Connecting to 2036…
+    </div>
+    <div class="progress-bar">
+      <div class="progress" id="progress"></div>
+    </div>
+  </div>
+
+  <!-- Message Screen -->
+  <div id="content" class="hidden">
+    <div class="message" id="message">
+      No matter how many versions of life we lived,<br/>
+      I still chose you — every time.
+    </div>
+
+    <div class="future-image">
+      <img src="Image.png" alt="Us in the future">
+    </div>
+
+    <div class="footer">
+      This message was sent by the man<br/>
+      who never stopped choosing you.
+    </div>
+  </div>
+
+</div>
+
+<!-- Optional Music (tap required on mobile) -->
+<audio id="bgMusic" src="music.mp3" preload="auto"></audio>
+
+<script>
+const steps = [
+  "Connecting to 2036…",
+  "Fetching one truth…",
+  "Decrypting memories…",
+  "Message found."
+];
+
+let step = 0;
+const loadingText = document.getElementById("loadingText");
+const progress = document.getElementById("progress");
+
+const interval = setInterval(() => {
+  step++;
+  if (step < steps.length) {
+    loadingText.textContent = steps[step];
+    progress.style.width = (step / (steps.length - 1)) * 100 + "%";
+  } else {
+    clearInterval(interval);
+    document.getElementById("loading").classList.add("hidden");
+    document.getElementById("content").classList.remove("hidden");
+
+    setTimeout(() => {
+      document.getElementById("message").style.opacity = 1;
+    }, 300);
+  }
+}, 1600);
+
+// Play music on first tap (mobile safe)
+document.body.addEventListener("click", () => {
+  const music = document.getElementById("bgMusic");
+  music.play().catch(() => {});
+}, { once: true });
+</script>
+
+</body>
+</html>
